@@ -1,15 +1,27 @@
-import React from 'react';
-import img from '../../assets/image/photo_2019-06-02_21-11-17.jpg';
-import Logo from '../../assets/image/logo.svg';
-import style from './App.module.scss';
+import React, { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Login } from '../../pages/login';
+import { PrivateRoutePage } from '../../pages/PrivatePage';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { getInitializedStatus } from '../../store/slices/appSlice';
+import { checkAuth } from '../../store/slices/userSlice';
 
 export const App = () => {
+  const dispatch = useAppDispatch();
+  const appInitialized = useAppSelector(getInitializedStatus);
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  if (!appInitialized) {
+    return <h1>Loader</h1>;
+  }
+
   return (
-    <div>
-      <Logo />
-      <h2 className={style.superClass}>Vehicles</h2>
-      <p className="desc">Description</p>
-      <img src={img} alt="image" />
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<PrivateRoutePage />} />
+    </Routes>
   );
 };

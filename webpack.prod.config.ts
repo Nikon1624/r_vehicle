@@ -10,6 +10,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle-[hash].js',
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -21,7 +22,14 @@ module.exports = {
     compress: true,
     port: 3000,
     hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://frontend-study.simbirsoft/',
+        changeOrigin: true,
+      },
+    },
   },
+  devtool: '',
   module: {
     rules: [
       {
@@ -54,21 +62,9 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
-        test: /\.(png|jp(e*)g|gif)$/,
-        use: 'file-loader?name=assets/image/[name].[ext]',
+        test: /\.(jpe?g|svg|png|gif|ico|eot|ttf|woff2?)(\?v=\d+\.\d+\.\d+)?$/i,
+        type: 'asset/resource',
       },
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      },
-      // {
-      //   test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader?name=assets/fonts/[name].[ext]',
-      //     },
-      //   ],
-      // },
     ],
   },
   plugins: [

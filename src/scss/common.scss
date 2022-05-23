@@ -1,0 +1,41 @@
+@import '~normalize-css/normalize.css';
+
+body {
+  margin: 0;
+  font-family: $panton-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $black;
+}
+
+.form {
+  width: 100%;
+  margin: 0;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+}
+
+.form-field,
+.form-field:-webkit-autofill,
+.form-field:-webkit-autofill:hover,
+.form-field:-webkit-autofill:focus,
+.form-field:-webkit-autofill:active {
+  display: block;
+  width: 100%;
+  height: 16px;
+  padding: 18px 0;
+  color: $cool-grey;
+  -webkit-text-fill-color: $cool-grey;
+  border: none;
+  border-bottom: 1px solid $light-grey;
+  -webkit-box-shadow: inset 0 0 0 50px #fff;
+}
+
+.error {
+  @include error;
+}
