@@ -1,0 +1,29 @@
+@import '../../scss/variables';
+@import '../../scss/mixins';
+
+.title {
+  margin-bottom: 35px;
+  text-transform: uppercase;
+}
+
+.fieldsWrapper {
+  margin-bottom: 45px;
+}
+
+.field {
+  margin-bottom: 8px;
+
+  &.error {
+    -webkit-text-fill-color: $error;
+    border-color: $error;
+    border-radius: 1px;
+  }
+}
+
+.submitButton {}
+
+@media all and (max-width: 992px) {
+  .submitButton {
+    width: 100%;
+  }
+}

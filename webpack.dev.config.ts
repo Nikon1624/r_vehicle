@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle-[hash].js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -19,8 +20,15 @@ module.exports = {
     port: 3000,
     hot: true,
     open: true,
+    historyApiFallback: true,
+    proxy: {
+      '/api': {
+        target: 'http://frontend-study.simbirsoft/',
+        changeOrigin: true,
+      },
+    },
   },
-
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -39,28 +47,27 @@ module.exports = {
       },
       {
         test: /\.module\.(sass|scss|css)$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        use: ['style-loader', {
+          loader: 'css-loader',
+          options: {
+            modules: {
+              localIdentName: '[local]_[sha1:hash:hex:7]',
+            },
+          },
+        }, 'postcss-loader', 'sass-loader'],
       },
       {
         test: /^((?!\.module).)*(sass|scss|css)$/,
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
-        test: /\.(png|jp(e*)g|gif)$/,
-        use: ['file-loader'],
-      },
-      {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
-      // {
-      //   test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader?name=assets/fonts/[name].[ext]',
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.(jpe?g|png|gif|ico|eot|ttf|woff2?)(\?v=\d+\.\d+\.\d+)?$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   plugins: [

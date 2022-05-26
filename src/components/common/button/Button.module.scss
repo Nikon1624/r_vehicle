@@ -1,0 +1,10 @@
+@import "../../../scss/variables";
+
+.button {
+  min-width: 100px;
+  padding: 10px 15px;
+  color: #ffffff;
+  background-color: $lipstick;
+  border: none;
+  border-radius: 1px;
+}
